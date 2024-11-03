@@ -4,7 +4,7 @@
 
 ![alt text](image-1.png)
 
-ML + Ops
+**MLOps == ML + Ops**
 
 **ML**
 1. Data Gathering
@@ -23,7 +23,8 @@ ML + Ops
 
 1. Create a GitHub repository for the project using the "Python" .gitignore template and MIT License. Then, clone the repository to local system: git clone <repo URL>
 
-2. 
+2. Create basic file/folder structure using template.py OR we can create this project repo by cloning from template repo
+    git repo url: `https://github.com/iamprashantjain/end-to-end-used-car-price-prediction`
 
-
+3. 
 
