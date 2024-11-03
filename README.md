@@ -27,7 +27,7 @@
 2. Create project file/folder structure using template.py OR we can create this project repo by cloning from template repo
     git repo url: `https://github.com/iamprashantjain/end-to-end-used-car-price-prediction`
 
-    ![alt text](image-2.png)
+![alt text](image-2.png)
 
 3. 
 
