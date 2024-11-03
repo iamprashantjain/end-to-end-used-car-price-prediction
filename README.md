@@ -30,5 +30,3 @@
 ![alt text](image-2.png)
 
 3. 
-
-
