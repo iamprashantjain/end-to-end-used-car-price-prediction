@@ -61,6 +61,12 @@ quality and reduce the time it takes to deliver updates.
 
 7. `No we can begin with the project implimentation and we'll learn other tools in between like MLFlow, DVC, Airflow`
 
-8. We will automate webscraping the data `ETL` and use that data in data ingestion, transformation, model building, evaluation and then use MLOps tools to deploy, maintain and monitor
+8. We can also incorporate webscraping the data `ETL Pipeline` and use that data in data ingestion, transformation, model building, evaluation and then use MLOps tools to deploy, maintain and monitor
 
-
+9. Currently, We will impliment end to end machine learning project:
+    1. Building the project `git, github, python`
+    2. Test: unit & integrated `pytest, tox`
+    3. Deliver the project using `docker image on github action server saved on azure`
+    3. Deploy using (CI/CD concept) `All above (CI) will be done on Github Action Server`
+    4. Monitor the project `Evidently.AI`
+    5. Retraining `(CT concept) using Airflow`
