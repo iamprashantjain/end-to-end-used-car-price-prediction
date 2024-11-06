@@ -70,3 +70,6 @@ quality and reduce the time it takes to deliver updates.
     3. Deploy using (CI/CD concept) `All above (CI) will be done on Github Action Server`
     4. Monitor the project `Evidently.AI`
     5. Retraining `(CT concept) using Airflow`
+    6. `DVC` for data management
+    7. `MLFlow` experiment tracking 
+    8. `Dagshub/BentoML` for model registry
