@@ -90,3 +90,7 @@ quality and reduce the time it takes to deliver updates.
 
 - The goal is to streamline the entire workflow, from data collection to model deployment and ongoing improvements.
 
+14. Update setup.py file & Update `init_setup.sh` script to execute all commands in 1 shot, use `bash init_setup.sh` to run the script in bash terminal (if venv not activated then activate it manually since source activate is for gitbash/linux system not windows powershell or cmd)
+
+15. Now start project implimentation in jupyter experiments.ipynb or past project files
+1:01:12  -- vid#9
