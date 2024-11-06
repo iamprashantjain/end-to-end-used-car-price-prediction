@@ -73,3 +73,20 @@ quality and reduce the time it takes to deliver updates.
     6. `DVC` for data management
     7. `MLFlow` experiment tracking 
     8. `Dagshub/BentoML` for model registry
+
+10. We will start with Jupyter notebook implimentation of the project
+11. Perform modular coding
+12. Adding variuos tools
+13. Deployment
+
+
+**Project Description**
+- This project involves building an end-to-end machine learning pipeline for predicting used car prices. The process will include:
+
+1. Web Scraping: Automating the extraction of used car data from the Cars24 website.
+2. Model Development: Building and training a machine learning model to predict car prices based on the scraped data.
+3. Deployment: Deploying the model in a production environment using Docker and GitHub Actions.
+4. Monitoring & Retraining: Continuously monitoring model performance and automatically retraining the model as new data is scraped.
+
+- The goal is to streamline the entire workflow, from data collection to model deployment and ongoing improvements.
+
