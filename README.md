@@ -95,4 +95,4 @@ quality and reduce the time it takes to deliver updates.
 15. Initiate the project implementation in a Jupyter notebook (experiments.ipynb), or alternatively, organize and document the project files. Ensure that you outline and define all key steps, including data cleaning, transformation, feature engineering, and model selection, as part of the experimentation process. This will make it easy to convert into modular coding and also at the time of re-training model with new data.
 
 
-1:01:12  -- vid#9
+1:04:40  -- vid#9
