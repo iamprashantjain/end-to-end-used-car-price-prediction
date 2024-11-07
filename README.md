@@ -95,4 +95,14 @@ quality and reduce the time it takes to deliver updates.
 15. Initiate the project implementation in a Jupyter notebook (experiments.ipynb), or alternatively, organize and document the project files. Ensure that you outline and define all key steps, including data cleaning, transformation, feature engineering, and model selection, as part of the experimentation process. This will make it easy to convert into modular coding and also at the time of re-training model with new data.
 
 
-1:04:40  -- vid#9
+16. Once everything is experimented in jupyter, we can start write modular code
+
+17. Write code for exception and logging
+
+18. components -- ![alt text](image-8.png)
+
+In each component: DI, DT, MT, ME there are 2 things:
+    1. config: path of the output
+    2. artifcats: output
+
+- for example: In data ingestion config, we will define path of the output files and then whatever will be the output after the data ingestion process, it will be saved on those paths and will be used by next component. In data transformation, it will read output data from the paths defined in config of data ingestion and perform transformation and save the preprocessor in the path defined in data transformation config and so on.. 

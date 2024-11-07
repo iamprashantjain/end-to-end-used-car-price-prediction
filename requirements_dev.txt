@@ -17,7 +17,8 @@ statsmodels
 tensorflow
 xgboost
 googleapis-common-protos==1.56.4
-
+sklearn
+ipykernel
 
 #dev_requirements
 
