@@ -119,3 +119,10 @@ In each component: DI, DT, MT, ME there are 2 things:
     3. KNN Imputation: This requires values to be encoded since it doesnt work on strings, so encoding rows which has missing values might give incorrect results but thats the better option right now since it can handle complex relationship
 
     4. So using KNN Imputation for both Numerical & Categorical data
+
+22. Continously facing issue in transformation key error "content.onRoadprice" :: check logs for that, applied below solution:
+
+    - The original code was passing X['content.onRoadPrice'] (the target column) directly as an argument to select_best_k. However, select_best_k expects y (the target variable), and X (the feature set) separately. This means X[num_cols] should be passed as the feature set, and the target column (e.g., y_train) should be passed to the method separately. In the updated code, I corrected this by passing y_train (the target values) from the initialize_data_transformation method into select_best_k instead of referencing the target column directly from X.
+
+
+    

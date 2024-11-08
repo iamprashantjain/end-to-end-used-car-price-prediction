@@ -13,11 +13,9 @@ import sys
 from dataclasses import dataclass
 from src.utils.utils import save_object
 
-
 @dataclass
 class DataTransformationConfig:
     preprocessor_obj_file_path = os.path.join('artifacts', 'preprocessor.pkl')
-
 
 class DataTransformation:
 
@@ -26,7 +24,7 @@ class DataTransformation:
 
     def select_best_k(self, X: pd.DataFrame, y: pd.Series):
         """
-        Select the best k for KNNImputer using cross-validation, using only numerical columns since cat is encoded
+        Select the best k for KNNImputer using cross-validation, using only numerical columns since cat is encoded.
         """
         best_k = None
         best_score = -1
@@ -63,36 +61,36 @@ class DataTransformation:
         return best_k
 
     
-    def get_data_preprocessing(self, X: pd.DataFrame):
+    def get_data_preprocessing(self, X: pd.DataFrame, y: pd.Series):
         try:
             logging.info('Preprocessing initiated')
 
-            cat_cols = ['content.bodyType','content.fuelType','content.insuranceType','content.make','content.transmission','content.duplicateKey']
+            # Define categorical and numerical columns
+            cat_cols = ['content.bodyType', 'content.fuelType', 'content.insuranceType', 'content.make', 'content.transmission', 'content.duplicateKey']
             num_cols = X.columns.difference(cat_cols).tolist()
 
             logging.info(f"Categorical Columns: {cat_cols}")
             logging.info(f"Numerical Columns: {num_cols}")
 
-            # Find the optimal n_neighbors for KNNImputer using cross-validation
-            # sneidng only numerical columns since cat col is not encoded
-            best_k = self.select_best_k(X[num_cols], X['content.onRoadPrice'])
+            # Find the optimal n_neighbors for KNNImputer using cross-validation (pass only X[num_cols] for KNN)
+            best_k = self.select_best_k(X[num_cols], y)  # Pass y for target column separately
 
             # Numerical Pipeline using KNNImputer with best k
             num_pipeline = Pipeline(
                 steps=[("imputer", KNNImputer(n_neighbors=best_k)),  # KNN imputation
-                       ("scaler", StandardScaler())]  # Standard Scaling
+                    ("scaler", StandardScaler())]  # Standard Scaling
             )
 
             # Categorical Pipeline using OneHotEncoder followed by KNNImputer
             cat_pipeline = Pipeline(
                 steps=[("encoder", OneHotEncoder(sparse_output=False, drop='first')),  # OneHotEncoding
-                       ("imputer", KNNImputer(n_neighbors=best_k))]  # KNN imputation
+                    ("imputer", KNNImputer(n_neighbors=best_k))]  # KNN imputation
             )
 
             # Create the preprocessor using ColumnTransformer
             preprocessor = ColumnTransformer(
                 transformers=[('num_pipeline', num_pipeline, num_cols),
-                              ('cat_pipeline', cat_pipeline, cat_cols)]
+                            ('cat_pipeline', cat_pipeline, cat_cols)]
             )
             
             return preprocessor
@@ -101,52 +99,42 @@ class DataTransformation:
             logging.error("Exception occurred in get_data_preprocessing")
             raise customexception(e, sys)
 
-
     def initialize_data_transformation(self, train_path: str, test_path: str):
         try:
             logging.info("Reading train & test data started")
-            logging.info(f"train & test path{train_path} & {train_path}")
+            logging.info(f"train & test path: {train_path} & {test_path}")
 
             # Load the datasets
             train_df = pd.read_excel(train_path)
             test_df = pd.read_excel(test_path)
             logging.info(f"Reading train & test data completed")            
             logging.info(f"First few rows of train_df: \n{train_df.head()}")
-            
-            # Define the target column name
-            target_column_name = 'content.onRoadPrice'
-            
-            try:
-                preprocessing_obj = self.get_data_preprocessing(train_df)
-                logging.info('reading train_df successful')
-            
-            except Exception as e:
-                logging.info('unable to read train_df')
-                raise customexception(e,sys)
 
-            # Drop the target column from both train and test sets
+            # Strip whitespace from column names
+            train_df.columns = train_df.columns.str.strip()
+            test_df.columns = test_df.columns.str.strip()
+
+            target_column_name = 'content.onRoadPrice'
+
+            # Drop the target column from both train and test sets (just for X_train and X_test)
             drop_columns = [target_column_name]
             logging.info("Dropping target column and preparing features and target")
 
-            # Check for Leading/Trailing Whitespace
-            train_df.columns = train_df.columns.str.strip()
-            test_df.columns = test_df.columns.str.strip()           
-            
             try:
-                X_train = train_df.drop(columns=[target_column_name])
-                y_train = train_df[target_column_name]
+                X_train = train_df.drop(columns=[target_column_name])  # Feature columns (without target)
+                y_train = train_df[target_column_name]  # Target column
 
-                X_test = test_df.drop(columns=[target_column_name])
-                y_test = test_df[target_column_name]
+                X_test = test_df.drop(columns=[target_column_name])  # Feature columns (without target)
+                y_test = test_df[target_column_name]  # Target column
             
             except Exception as e:
-                logging.info('unable to drop the target col & prepare input & target variables x_train & x_test')
-                raise customexception(e,sys)           
-            
+                logging.error('Unable to drop the target column and prepare input & target variables (X_train, y_train, X_test, y_test)')
+                raise customexception(e, sys)
 
-            # Apply preprocessing
-            X_train_transformed = preprocessing_obj.fit_transform(X_train)
-            X_test_transformed = preprocessing_obj.transform(X_test)
+            # Apply preprocessing (pass only features X_train)
+            preprocessing_obj = self.get_data_preprocessing(X_train, y_train)  # Pass y_train as target here
+            X_train_transformed = preprocessing_obj.fit_transform(X_train)  # Apply transformation to feature columns only
+            X_test_transformed = preprocessing_obj.transform(X_test)  # Apply transformation to feature columns only
 
             logging.info("Applying preprocessing object on training and testing datasets.")
 
@@ -155,19 +143,15 @@ class DataTransformation:
             test_arr = np.c_[X_test_transformed, np.array(y_test)]
 
             # Save the preprocessor object to disk
-            save_object(
-                file_path=self.data_transformation_config.preprocessor_obj_file_path,
-                obj=preprocessing_obj
-            )
+            save_object(file_path=self.data_transformation_config.preprocessor_obj_file_path, obj=preprocessing_obj)
 
             logging.info("Preprocessing pickle file saved")
 
             return train_arr, test_arr
 
         except Exception as e:
-            logging.error("Exception occurred in initialize_data_transformation")
+            logging.error(f"Exception occurred in initialize_data_transformation: {str(e)}")
             raise customexception(e, sys)
-
 
 if __name__ == "__main__":
     train_data_path = r"H:\CampusX_DS\week43 - My Projects Aug 2024\end-to-end-used-car-price-prediction\artifacts\train.xlsx"
