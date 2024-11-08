@@ -111,4 +111,11 @@ In each component: DI, DT, MT, ME there are 2 things:
 
 20. Next, Write modular code for data transformation which creates preprocessor.pkl file to, again test run the script to make sure everything is working fine.
 
-21. 
+21. Since Data have both categorical & nuerical data with missing value in categorical data. There are 3 options to impute missing values:
+    1. Subject Matter Expertise & requires manually filling missing values, which is not possible bcoz I want to automate everything and also missing values are huge so it will be imposible
+
+    2. Impute with "most frequent" values: It will create bias for columns where some categories are more means in the case of data imbalance
+
+    3. KNN Imputation: This requires values to be encoded since it doesnt work on strings, so encoding rows which has missing values might give incorrect results but thats the better option right now since it can handle complex relationship
+
+    4. So using KNN Imputation for both Numerical & Categorical data

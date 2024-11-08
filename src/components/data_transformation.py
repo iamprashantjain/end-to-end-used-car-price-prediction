@@ -30,7 +30,7 @@ class DataTransformation:
 
             # Identify categorical and numerical columns
             cat_cols = X.select_dtypes(include="object").columns.tolist()
-
+            
             # Add binary columns (those with exactly 2 unique values) to categorical columns
             binary_cols = [col for col in X.columns if set(X[col].dropna().unique()) == {0, 1}]
             cat_cols.extend(binary_cols)
@@ -56,8 +56,8 @@ class DataTransformation:
             # We encode categorical variables first and then apply KNN imputation
             cat_pipeline = Pipeline(
                 steps=[
-                    ("imputer", KNNImputer(n_neighbors=best_k)),  # KNN imputation
-                    ("encoder", OneHotEncoder(sparse_output=False, drop='first'))
+                    ("encoder", OneHotEncoder(sparse_output=False, drop='first')),
+                    ("imputer", KNNImputer(n_neighbors=best_k))  # KNN imputation
                 ]
             )
 
