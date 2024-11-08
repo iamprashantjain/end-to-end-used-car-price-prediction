@@ -193,9 +193,9 @@ class DataIngestion:
         #final df to to used for model building
         df = df[['ABSAntilockBrakingSystem','AirConditioner','Airbags','Bootspacelitres','Displacementcc','FueltankCapacitylitres','GroundClearancemm','tyre_health_pct','MaxPowerbhp','MaxPowerrpm','MaxTorqueNm','SeatingCapacity','content.bodyType','content.duplicateKey','content.fitnessUpto_months_remaining','content.fuelType','content.insuranceExpiry_months_remaining','content.insuranceType','content.make','content.odometerReading','content.ownerNumber','content.transmission','content.year','defects','repainted','content.onRoadPrice']]
         logging.info(f"Final Columns to be used in model building: {df.columns}")
-        logging.info(f"current missing value count: {df.isnull().sum()}")
-        
+        logging.info(f"current missing value count: {df.isnull().sum()}")        
         logging.info("Data cleaning completed")
+        
         return df
 
     
