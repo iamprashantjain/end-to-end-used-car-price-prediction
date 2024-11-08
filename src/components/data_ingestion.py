@@ -185,6 +185,11 @@ class DataIngestion:
         #drop feature engineered columns
         df.drop(columns=['Left Front Tyre', 'Right Front Tyre', 'Left Rear Tyre', 'Right Rear Tyre', 'Spare Tyre', 'Tyre_Health'], inplace=True)
         
+        #change not available in ABSAntilockBrakingSystem to 0, as bcoz of this i was facing issues
+        # For numeric conversion after replacement, you can use pd.to_numeric like this:
+        df['ABSAntilockBrakingSystem'] = pd.to_numeric(df['ABSAntilockBrakingSystem'].str.replace("not available", "0"), errors='coerce')
+
+        
         #final df to to used for model building
         df = df[['ABSAntilockBrakingSystem','AirConditioner','Airbags','Bootspacelitres','Displacementcc','FueltankCapacitylitres','GroundClearancemm','tyre_health_pct','MaxPowerbhp','MaxPowerrpm','MaxTorqueNm','SeatingCapacity','content.bodyType','content.duplicateKey','content.fitnessUpto_months_remaining','content.fuelType','content.insuranceExpiry_months_remaining','content.insuranceType','content.make','content.odometerReading','content.ownerNumber','content.transmission','content.year','defects','repainted','content.onRoadPrice']]
         

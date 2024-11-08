@@ -1,10 +1,11 @@
 import pandas as pd
 import numpy as np
 from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
+from sklearn.impute import KNNImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score, KFold
+from sklearn.ensemble import RandomForestRegressor
 from src.logger.logging import logging
 from src.exception.exception import customexception
 import os
@@ -25,9 +26,6 @@ class DataTransformation:
 
     def get_data_preprocessing(self, X: pd.DataFrame):
         try:
-            logging.info('removing appointmentId from dataframe')
-            X.drop(columns=['content.appointmentId'], inplace=True)
-                        
             logging.info('Preprocessing initiated')
 
             # Identify categorical and numerical columns
@@ -43,18 +41,22 @@ class DataTransformation:
             logging.info(f"Categorical Columns: {cat_cols}")
             logging.info(f"Numerical Columns: {num_cols}")
 
-            # Numerical Pipeline
+            # Find the optimal n_neighbors for KNNImputer using cross-validation
+            best_k = self.select_best_k(X[num_cols + cat_cols])
+
+            # Numerical Pipeline using KNNImputer with best k
             num_pipeline = Pipeline(
                 steps=[
-                    ("imputer", SimpleImputer(strategy="mean")),
+                    ("imputer", KNNImputer(n_neighbors=best_k)),  # KNN imputation
                     ("scaler", StandardScaler())
                 ]
             )
 
-            # Categorical Pipeline
+            # Categorical Pipeline using KNNImputer with best k
+            # We encode categorical variables first and then apply KNN imputation
             cat_pipeline = Pipeline(
                 steps=[
-                    ("imputer", SimpleImputer(strategy="most_frequent")),
+                    ("imputer", KNNImputer(n_neighbors=best_k)),  # KNN imputation
                     ("encoder", OneHotEncoder(sparse_output=False, drop='first'))
                 ]
             )
@@ -72,6 +74,45 @@ class DataTransformation:
         except Exception as e:
             logging.error("Exception occurred in get_data_preprocessing")
             raise customexception(e, sys)
+
+
+    def select_best_k(self, X: pd.DataFrame):
+        """
+        Select the best k for KNNImputer using cross-validation.
+        """
+        best_k = None
+        best_score = -1
+
+        # Test k values from 1 to 10
+        for k in range(1, 11):
+            try:
+                # Initialize the KNN imputer
+                knn_imputer = KNNImputer(n_neighbors=k)
+
+                # Impute missing values for the combined DataFrame
+                X_imputed = pd.DataFrame(knn_imputer.fit_transform(X), columns=X.columns)
+
+                # Evaluate model using cross-validation
+                pipeline = Pipeline(steps=[
+                    ('scaler', StandardScaler()),
+                    ('regressor', RandomForestRegressor(random_state=42))
+                ])
+
+                cv = KFold(n_splits=5, shuffle=True, random_state=42)
+                score = cross_val_score(pipeline, X_imputed, y, cv=cv, scoring='r2').mean()
+
+                logging.info(f'k: {k}, Cross-validated score: {score:.4f}')
+                
+                if score > best_score:
+                    best_score = score
+                    best_k = k
+
+            except Exception as e:
+                logging.error(f"Error in selecting best k: {k}")
+                raise customexception(e, sys)
+
+        logging.info(f'Best k: {best_k} with score: {best_score:.4f}')
+        return best_k
 
     def initialize_data_transformation(self, train_path: str, test_path: str):
         try:
@@ -132,7 +173,6 @@ class DataTransformation:
             raise customexception(e, sys)
 
 
-
 if __name__ == "__main__":
     train_data_path = r"H:\CampusX_DS\week43 - My Projects Aug 2024\end-to-end-used-car-price-prediction\artifacts\train.xlsx"
     test_data_path = r"H:\CampusX_DS\week43 - My Projects Aug 2024\end-to-end-used-car-price-prediction\artifacts\test.xlsx"
@@ -148,7 +188,20 @@ if __name__ == "__main__":
     except Exception as e:
         logging.error(f"Error during data transformation: {str(e)}")
         raise customexception(e, sys)
+    
+    
+if __name__ == "__main__":
+    train_data_path = r"H:\CampusX_DS\week43 - My Projects Aug 2024\end-to-end-used-car-price-prediction\artifacts\train.xlsx"
+    test_data_path = r"H:\CampusX_DS\week43 - My Projects Aug 2024\end-to-end-used-car-price-prediction\artifacts\test.xlsx"
 
+    data_transformation = DataTransformation()
 
-# data = data[["ABSAntilockBrakingSystem","AirConditioner","Airbags","Bootspacelitres","Displacementcc","FueltankCapacitylitres","GroundClearancemm","Tyre_WARN","MaxPowerbhp","MaxPowerrpm","MaxTorqueNm","SeatingCapacity","content.bodyType","content.duplicateKey","content.fitnessUpto_months_remaining","content.fuelType","content.insuranceExpiry_months_remaining","content.insuranceType","content.make","content.model","content.odometerReading","content.ownerNumber","content.transmission","content.year","defects","repainted",]]
-#currently facing error: columns not available in the index.. bcoz of feature engineering steps not included in cleaning
+    try:
+        train_array, test_array = data_transformation.initialize_data_transformation(train_data_path, test_data_path)
+        logging.info("Training and testing data transformation completed successfully.")
+        logging.info(f"Training array shape: {train_array.shape}")
+        logging.info(f"Testing array shape: {test_array.shape}")
+
+    except Exception as e:
+        logging.error(f"Error during data transformation: {str(e)}")
+        raise customexception(e, sys)
