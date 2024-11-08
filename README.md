@@ -108,3 +108,5 @@ In each component: DI, DT, MT, ME there are 2 things:
 - for example: In data ingestion config, we will define path of the output files and then whatever will be the output after the data ingestion process, it will be saved on those paths and will be used by next component. In data transformation, it will read output data from the paths defined in config of data ingestion and perform transformation and save the preprocessor in the path defined in data transformation config and so on.. 
 
 19. Write code for data ingestion and incorporate intial data cleaning in the same script.
+
+11vid - 2:04

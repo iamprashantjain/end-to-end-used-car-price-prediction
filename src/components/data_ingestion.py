@@ -150,7 +150,7 @@ class DataIngestion:
 
             # Clean the data
             data = self.initial_data_cleaning(data)
-
+                        
             # Ensure the directory for saving files exists
             os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path), exist_ok=True)
 
