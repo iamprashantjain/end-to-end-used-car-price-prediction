@@ -1,0 +1,15 @@
+artifact_uri: file:///H:/CampusX_DS/week43%20-%20My%20Projects%20Aug%202024/end-to-end-used-car-price-prediction/mlruns/0/060172f7c4aa4f8f99477f8919b75388/artifacts
+end_time: 1731313719362
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 060172f7c4aa4f8f99477f8919b75388
+run_name: angry-perch-431
+run_uuid: 060172f7c4aa4f8f99477f8919b75388
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731313688696
+status: 3
+tags: []
+user_id: iampr

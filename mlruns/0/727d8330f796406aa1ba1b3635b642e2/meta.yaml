@@ -1,0 +1,15 @@
+artifact_uri: file:///H:/CampusX_DS/week43%20-%20My%20Projects%20Aug%202024/end-to-end-used-car-price-prediction/mlruns/0/727d8330f796406aa1ba1b3635b642e2/artifacts
+end_time: 1731351968409
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 727d8330f796406aa1ba1b3635b642e2
+run_name: gentle-perch-550
+run_uuid: 727d8330f796406aa1ba1b3635b642e2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731351936906
+status: 3
+tags: []
+user_id: iampr

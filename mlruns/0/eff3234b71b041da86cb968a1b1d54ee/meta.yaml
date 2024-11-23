@@ -1,0 +1,15 @@
+artifact_uri: file:///H:/CampusX_DS/week43%20-%20My%20Projects%20Aug%202024/end-to-end-used-car-price-prediction/mlruns/0/eff3234b71b041da86cb968a1b1d54ee/artifacts
+end_time: 1731351135683
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: eff3234b71b041da86cb968a1b1d54ee
+run_name: ambitious-squid-651
+run_uuid: eff3234b71b041da86cb968a1b1d54ee
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731351092478
+status: 3
+tags: []
+user_id: iampr

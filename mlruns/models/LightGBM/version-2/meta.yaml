@@ -1,0 +1,12 @@
+creation_timestamp: 1731351968340
+current_stage: None
+description: null
+last_updated_timestamp: 1731351968340
+name: LightGBM
+run_id: 727d8330f796406aa1ba1b3635b642e2
+run_link: null
+source: file:///H:/CampusX_DS/week43%20-%20My%20Projects%20Aug%202024/end-to-end-used-car-price-prediction/mlruns/0/727d8330f796406aa1ba1b3635b642e2/artifacts/model
+status: READY
+status_message: null
+user_id: null
+version: 2

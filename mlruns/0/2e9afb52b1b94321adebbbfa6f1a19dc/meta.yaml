@@ -1,0 +1,15 @@
+artifact_uri: file:///H:/CampusX_DS/week43%20-%20My%20Projects%20Aug%202024/end-to-end-used-car-price-prediction/mlruns/0/2e9afb52b1b94321adebbbfa6f1a19dc/artifacts
+end_time: 1731778954102
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2e9afb52b1b94321adebbbfa6f1a19dc
+run_name: big-steed-294
+run_uuid: 2e9afb52b1b94321adebbbfa6f1a19dc
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731778906452
+status: 3
+tags: []
+user_id: iampr

@@ -1,0 +1,15 @@
+artifact_uri: file:///H:/CampusX_DS/week43%20-%20My%20Projects%20Aug%202024/end-to-end-used-car-price-prediction/mlruns/0/e1c056ec1abc46b8952a99206d993c65/artifacts
+end_time: 1731249805515
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e1c056ec1abc46b8952a99206d993c65
+run_name: LinearRegression
+run_uuid: e1c056ec1abc46b8952a99206d993c65
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731249735558
+status: 4
+tags: []
+user_id: iampr

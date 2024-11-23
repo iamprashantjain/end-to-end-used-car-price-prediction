@@ -1,0 +1,17 @@
+pandas
+openpyxl
+scikit-learn
+numpy
+seaborn
+flask
+mlflow
+dvc
+xgboost
+apache-airflow
+lightgbm
+catboost
+statsmodels
+xgboost
+
+
+-e .

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Used Car Price Prediction Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 30px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Used Car Price Prediction</h2>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="ABSAntilockBrakingSystem">ABS Antilock Braking System</label>
+            <input type="number" step="1" id="ABSAntilockBrakingSystem" name="ABSAntilockBrakingSystem" required>
+        </div>
+
+        <div class="form-group">
+            <label for="AirConditioner">Air Conditioner</label>
+            <input type="number" step="1" id="AirConditioner" name="AirConditioner" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Airbags">Airbags</label>
+            <input type="number" step="1" id="Airbags" name="Airbags" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Bootspacelitres">Boot Space (litres)</label>
+            <input type="number" step="1" id="Bootspacelitres" name="Bootspacelitres" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Displacementcc">Displacement (cc)</label>
+            <input type="number" step="1" id="Displacementcc" name="Displacementcc" required>
+        </div>
+
+        <div class="form-group">
+            <label for="FueltankCapacitylitres">Fuel Tank Capacity (litres)</label>
+            <input type="number" step="1" id="FueltankCapacitylitres" name="FueltankCapacitylitres" required>
+        </div>
+
+        <div class="form-group">
+            <label for="GroundClearancemm">Ground Clearance (mm)</label>
+            <input type="number" step="1" id="GroundClearancemm" name="GroundClearancemm" required>
+        </div>
+
+        <div class="form-group">
+            <label for="tyre_health_pct">Tyre Health Percentage</label>
+            <input type="number" step="1" id="tyre_health_pct" name="tyre_health_pct" required>
+        </div>
+
+        <div class="form-group">
+            <label for="MaxPowerbhp">Max Power (bhp)</label>
+            <input type="number" step="1" id="MaxPowerbhp" name="MaxPowerbhp" required>
+        </div>
+
+        <div class="form-group">
+            <label for="MaxPowerrpm">Max Power RPM</label>
+            <input type="number" step="1" id="MaxPowerrpm" name="MaxPowerrpm" required>
+        </div>
+
+        <div class="form-group">
+            <label for="MaxTorqueNm">Max Torque (Nm)</label>
+            <input type="number" step="1" id="MaxTorqueNm" name="MaxTorqueNm" required>
+        </div>
+
+        <div class="form-group">
+            <label for="SeatingCapacity">Seating Capacity</label>
+            <input type="number" step="1" id="SeatingCapacity" name="SeatingCapacity" required>
+        </div>
+
+        <div class="form-group">
+            <label for="bodyType">Body Type</label>
+            <select id="bodyType" name="bodyType" required>
+                <option value="Hatchback">Hatchback</option>
+                <option value="Sedan">Sedan</option>
+                <option value="SUV">SUV</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="duplicateKey">Duplicate Key</label>
+            <input type="number" step="1" id="duplicateKey" name="duplicateKey" required>
+        </div>
+
+        <div class="form-group">
+            <label for="fitnessUpto_months_remaining">Fitness (months remaining)</label>
+            <input type="number" step="1" id="fitnessUpto_months_remaining" name="fitnessUpto_months_remaining" required>
+        </div>
+
+        <div class="form-group">
+            <label for="fuelType">Fuel Type</label>
+            <select id="fuelType" name="fuelType" required>
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="CNG">CNG</option>
+                <option value="Electric">Electric</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="insuranceExpiry_months_remaining">Insurance Expiry (months remaining)</label>
+            <input type="number" step="1" id="insuranceExpiry_months_remaining" name="insuranceExpiry_months_remaining" required>
+        </div>
+
+        <div class="form-group">
+            <label for="insuranceType">Insurance Type</label>
+            <select id="insuranceType" name="insuranceType" required>
+                <option value="Comprehensive">Comprehensive</option>
+                <option value="Third Party">Third Party</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="make">Car Make</label>
+            <input type="text" id="make" name="make" required>
+        </div>
+
+        <div class="form-group">
+            <label for="odometerReading">Odometer Reading (in km)</label>
+            <input type="number" step="1" id="odometerReading" name="odometerReading" required>
+        </div>
+
+        <div class="form-group">
+            <label for="ownerNumber">Number of Previous Owners</label>
+            <input type="number" step="1" id="ownerNumber" name="ownerNumber" required>
+        </div>
+
+        <div class="form-group">
+            <label for="transmission">Transmission Type</label>
+            <select id="transmission" name="transmission" required>
+                <option value="Manual">Manual</option>
+                <option value="Automatic">Automatic</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="year">Year of Manufacture</label>
+            <input type="number" id="year" name="year" required>
+        </div>
+
+        <div class="form-group">
+            <label for="defects">Number of Defects</label>
+            <input type="number" step="1" id="defects" name="defects" required>
+        </div>
+
+        <div class="form-group">
+            <label for="repainted">Number of Times Repainted</label>
+            <input type="number" step="1" id="repainted" name="repainted" required>
+        </div>
+
+        <button type="submit">Predict Price</button>
+    </form>
+
+    {% if predictions is not none %}
+        <div class="result">
+            <h3>Prediction Result</h3>
+            <p><strong>Approximate Price Range:</strong> ₹{{ ci_lower|round(2) }} to ₹{{ ci_upper|round(2) }}</p>
+        </div>
+    {% elif error %}
+        <div class="error">
+            <p>Error: {{ error }}</p>
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
