@@ -185,14 +185,14 @@ def calculate_95_ci(model, X, y, model_type):
         ci_upper = np.percentile(bootstrap_preds, 97.5, axis=0)
 
     # For Gaussian Process Regressor (GaussianProcessRegressor)
-    elif isinstance(model, GaussianProcessRegressor):
+    elif model_type == 'GaussianProcessRegressor':
         # For Gaussian processes, the CI can be derived from the predicted mean and standard deviation
         mean, std = model.predict(X, return_std=True)
         ci_lower = mean - 1.96 * std
         ci_upper = mean + 1.96 * std
 
     # For Boosting Models (XGBoost, LightGBM, CatBoost)
-    elif model_type in ['XGBoost', 'LightGBM', 'CatBoost']:
+    elif model_type in ['XGBRegressor', 'LGBMRegressor', 'CatBoostRegressor']:
         n_bootstrap = 1000
         bootstrap_preds = []
 
