@@ -53,6 +53,10 @@ services:
       - AIRFLOW_ENV=production
     networks:
       - my_network
+    
+    volumes:
+      - D:/end-to-end-used-car-price-prediction-adb0044c01b9753414479946566be43cc0144613:/app  # Mount your local code directory to /app in the container
+    
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]  # Check if the web server is responding
       interval: 1m
@@ -69,6 +73,10 @@ services:
       - "80:80"
     networks:
       - my_network
+    
+    volumes:
+      - D:/end-to-end-used-car-price-prediction-adb0044c01b9753414479946566be43cc0144613:/app  # Mount your local code directory to /app in the container      
+    
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80"]
       interval: 1m

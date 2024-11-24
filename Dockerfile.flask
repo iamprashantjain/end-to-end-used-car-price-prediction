@@ -1,4 +1,27 @@
-# Use the official Python 3.8 slim image as the base image
+# # Use the official Python 3.8 slim image as the base image
+# FROM python:3.10-slim-buster
+
+# # Create a new directory named /app in the container
+# RUN mkdir /app
+
+# # Copy the current directory contents into /app in the container
+# COPY . /app/
+
+# # Set the working directory to /app
+# WORKDIR /app
+
+# #for lightgbm algorithm
+# RUN apt-get update && apt-get install -y libgomp1
+
+# # Update the package index and install required Python packages
+# RUN apt-get update -y && \
+#     pip install --no-cache-dir -r requirements.txt
+
+# # Command to run the application
+# CMD ["python3", "app.py"]
+
+
+# Use the official Python 3.10 slim image as the base image
 FROM python:3.10-slim-buster
 
 # Create a new directory named /app in the container
@@ -10,12 +33,18 @@ COPY . /app/
 # Set the working directory to /app
 WORKDIR /app
 
-#for lightgbm algorithm
-RUN apt-get update && apt-get install -y libgomp1
-
-# Update the package index and install required Python packages
+# Install system dependencies required for machine learning (like lightgbm)
 RUN apt-get update -y && \
+    apt-get install -y \
+    build-essential \
+    libgomp1 \
+    python3-dev && \
+    rm -rf /var/lib/apt/lists/*  # Clean up apt cache to reduce image size
+
+# Install Python dependencies from requirements.txt
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
     pip install --no-cache-dir -r requirements.txt
 
-# Command to run the application
+
+# Command to run the Flask application
 CMD ["python3", "app.py"]
