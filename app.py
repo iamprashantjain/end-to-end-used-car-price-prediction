@@ -3,7 +3,6 @@ from flask import Flask, render_template, request
 import pandas as pd
 from src.pipeline.prediction_pipeline import PredictPipeline, CustomData
 
-
 app = Flask(__name__)
 
 # Initialize the prediction pipeline
