@@ -3,7 +3,7 @@ import sys
 import pandas as pd
 from src.exception.exception import customexception
 from src.logger.logging import logging
-from src.utils.utils import load_object, calculate_95_ci
+from src.utils.utils import load_object
 import joblib
 
 class PredictPipeline:
@@ -33,13 +33,10 @@ class PredictPipeline:
 
             # Make predictions using the trained model
             predictions = model.predict(scaled_features)
-
-            # Get model type (you can customize this as per your implementation)
-            model_type = type(model).__name__
-
-            # Calculate 95% confidence interval (lower and upper bounds)
-            ci_lower, ci_upper = calculate_95_ci(model, scaled_features, predictions, model_type)
-
+            
+            ci_lower = predictions - 5000
+            ci_upper = predictions + 5000
+                        
             return predictions, ci_lower, ci_upper
 
 

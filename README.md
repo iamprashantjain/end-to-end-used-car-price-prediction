@@ -185,3 +185,5 @@ Pre-Requisite: Python, Docker
 3. Once activated, run: `docker-compose build --no-cache && docker-compose up`. This will build & up the docker container with 2 images:
     - Airflow: access it from localhost:8080
     - Flask app: access it from localhost:80/predict
+4. Cleanup everything in Docker:
+    - `docker system prune -a -f --volumes`

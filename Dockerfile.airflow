@@ -1,119 +1,10 @@
-# # Use the official Python 3.10 slim image as the base image
-# FROM python:3.8-slim-buster
-
-# # Set the user to root to perform administrative tasks
-# USER root
-
-# # Create a new directory named /app in the container
-# RUN mkdir /app
-
-# # Copy all files from the current directory on the host to /app in the container
-# COPY . /app/
-
-# # Set the working directory to /app
-# WORKDIR /app/
-
-# #for lightgbm algorithm
-# RUN apt-get update && apt-get install -y libgomp1
-
-# # Install the required Python packages listed in requirements.txt
-# RUN pip3 install --upgrade pip
-# RUN pip3 install --upgrade apache-airflow pydantic
-# RUN pip3 install typing-extensions
-# RUN pip3 install pendulum==2.1.2
-# RUN pip3 install -r requirements.txt
-
-# # Set environment variables for Apache Airflow
-# # AIRFLOW_HOME specifies the directory where Airflow will look for its configuration files
-# ENV AIRFLOW_HOME="/app/airflow"
-
-# # Configure Airflow settings
-# # Sets the maximum time (in seconds) for importing DAGs
-# ENV AIRFLOW_CORE_DAGBAG_IMPORT_TIMEOUT=1000
-
-# # Enable pickling for XCom, allowing complex objects to be passed between tasks
-# ENV AIRFLOW_CORE_ENABLE_XCOM_PICKLING=True
-
-# # Initialize the Airflow database, creating necessary tables and configurations
-# # RUN airflow db init
-# RUN airflow db migrate
-
-# # Create an Airflow user with specified email, first name, last name, password, role, and username
-# RUN airflow users create -e iamprashant2601@gmail.com -f prashant -l jain -p admin -r Admin -u admin
-
-# # Change the permissions of the start.sh script to make it executable
-# RUN chmod 777 start.sh
-
-# # Update the package list in the container
-# RUN apt update -y
-
-# # Set the entry point to the shell, allowing for command execution
-# ENTRYPOINT [ "/bin/sh" ]
-
-# # Specify the default command to run when the container starts
-# CMD ["start.sh"]
-
-
-
-# # Use the official Python 3.10 slim image as the base image
-# FROM python:3.10-slim-buster
-
-# # Set the user to root to perform administrative tasks
-# USER root
-
-# # Create a new directory named /app in the container
-# RUN mkdir /app
-
-# # Copy all files from the current directory on the host to /app in the container
-# COPY . /app/
-
-# # Set the working directory to /app
-# WORKDIR /app/
-
-# # Install the required system and Python packages
-# RUN apt-get update && \
-#     apt-get install -y build-essential libyaml-dev \
-#     apt-get install -y libgomp1 && \
-#     pip3 install --upgrade pip && \
-#     pip3 install --upgrade setuptools wheel apache-airflow pydantic typing-extensions pendulum==2.1.2 && \
-#     pip3 install -r requirements.txt
-
-
-# RUN pip install Cython
-
-# # Set environment variables for Apache Airflow
-# ENV AIRFLOW_HOME="/app/airflow"
-# ENV AIRFLOW_CORE_DAGBAG_IMPORT_TIMEOUT=1000
-# ENV AIRFLOW_CORE_ENABLE_XCOM_PICKLING=True
-
-# # Initialize the Airflow database
-# RUN airflow db init
-
-# # Run the database migration
-# RUN airflow db migrate
-
-# # Create an Airflow user with specified email, first name, last name, password, role, and username
-# RUN airflow users create -e iamprashant2601@gmail.com -f prashant -l jain -p admin -r Admin -u admin
-
-# # Change the permissions of the start.sh script to make it executable
-# RUN chmod +x start.sh
-
-# # Set the entry point to the shell, allowing for command execution
-# ENTRYPOINT [ "/bin/sh" ]
-
-# # Specify the default command to run when the container starts
-# CMD ["start.sh"]
-
-
-
-
 # Use the official Python 3.10 slim image as the base image
 FROM python:3.10-slim-buster
 
 # Set the user to root to perform administrative tasks
 USER root
 
-# Set a working directory for the application
+# Create a new directory named /app in the container
 RUN mkdir /app
 
 # Copy all files from the current directory on the host to /app in the container
@@ -122,15 +13,22 @@ COPY . /app/
 # Set the working directory to /app
 WORKDIR /app/
 
-# Install system dependencies and clean up apt cache
-RUN apt-get update && \
-    apt-get install -y build-essential libyaml-dev libgomp1 && \
-    rm -rf /var/lib/apt/lists/*
+# Install build dependencies and necessary system libraries
+RUN apt-get update -y && \
+    apt-get install -y \
+    build-essential \
+    libgomp1 \
+    libyaml-dev \
+    python3-dev \
+    cython && \
+    rm -rf /var/lib/apt/lists/*  # Clean up apt cache to reduce image size
 
-# Install Python dependencies using pip
-RUN pip install --upgrade pip setuptools wheel && \
-    pip install cython apache-airflow pydantic typing-extensions pendulum==2.1.2 && \
-    pip install -r requirements.txt
+# Upgrade pip, setuptools, and wheel to the latest versions
+RUN pip3 install --no-cache-dir --upgrade pip setuptools wheel
+
+# Install the required Python packages listed in requirements.txt
+RUN pip3 install --no-cache-dir pendulum==2.1.2
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Set environment variables for Apache Airflow
 ENV AIRFLOW_HOME="/app/airflow"
@@ -140,14 +38,11 @@ ENV AIRFLOW_CORE_ENABLE_XCOM_PICKLING=True
 # Initialize the Airflow database
 RUN airflow db init
 
-# Run the database migration
-RUN airflow db migrate
-
 # Create an Airflow user with specified email, first name, last name, password, role, and username
 RUN airflow users create -e iamprashant2601@gmail.com -f prashant -l jain -p admin -r Admin -u admin
 
 # Change the permissions of the start.sh script to make it executable
-RUN chmod +x /app/start.sh
+RUN chmod 777 start.sh
 
 # Set the entry point to the shell, allowing for command execution
 ENTRYPOINT [ "/bin/sh" ]

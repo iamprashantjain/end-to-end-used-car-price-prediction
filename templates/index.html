@@ -195,7 +195,11 @@
     {% if predictions is not none %}
         <div class="result">
             <h3>Prediction Result</h3>
-            <p><strong>Approximate Price Range:</strong> ₹{{ ci_lower|round(2) }} to ₹{{ ci_upper|round(2) }}</p>
+            {% if ci_lower is not none and ci_upper is not none %}
+                <p><strong>Approximate Price Range:</strong> ₹{{ ci_lower|round(2) }} to ₹{{ ci_upper|round(2) }}</p>
+            {% else %}
+                <p><strong>Approximate Price Range:</strong> Data not available</p>
+            {% endif %}
         </div>
     {% elif error %}
         <div class="error">

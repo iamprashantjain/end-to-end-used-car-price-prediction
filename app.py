@@ -2,7 +2,7 @@ from src.logger.logging import logging
 from flask import Flask, render_template, request
 import pandas as pd
 from src.pipeline.prediction_pipeline import PredictPipeline, CustomData
-from src.utils.utils import calculate_95_ci
+
 
 app = Flask(__name__)
 
