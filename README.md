@@ -1,3 +1,134 @@
+# Used Car Price Prediction Machine Learning Project
+
+This repository contains the implementation of a **Used Car Price Prediction** machine learning model using data scraped from **Cars24**, a leading platform for buying and selling used cars. The project spans the entire Machine Learning lifecycle, including data scraping, data cleaning, feature engineering, model building, evaluation, and deployment. Additionally, it incorporates **continuous model training and retraining** using **Airflow** for automation, as well as MLOps tools for version control, model management, and pipeline orchestration.
+
+## Project Overview
+
+The objective of this project is to build a machine learning model capable of predicting the price of a used car based on various features such as brand, model, year of manufacture, mileage, and more. Data was scraped from **Cars24**, cleaned, preprocessed, and used to train a machine learning model for price prediction. The project also implements continuous training using **Apache Airflow** to periodically retrain the model with new data.
+
+## Key Components
+
+1. **Data Scraping**:
+   - Data was scraped from **Cars24** using **web scraping techniques** (using libraries like `requests` and `BeautifulSoup`).
+   - The dataset contains information such as car make, model, year, mileage, transmission type, fuel type, and car condition.
+
+2. **Data Cleaning & Preprocessing**:
+   - Missing values were handled, irrelevant columns were removed, and outliers were identified and treated.
+   - Data types were corrected, categorical variables were encoded, and feature scaling was applied where necessary.
+
+3. **Exploratory Data Analysis (EDA)**:
+   - Performed thorough exploratory data analysis (EDA) to understand the distribution of car prices and identify patterns or correlations between features and price.
+   - Visualizations like histograms, boxplots, and scatter plots were used to explore relationships.
+
+4. **Feature Engineering**:
+   - Created new features based on existing data (e.g., extracting car age from the year of manufacture, converting textual features into numerical values like car condition).
+   - Used one-hot encoding for categorical features (e.g., fuel type, transmission type).
+
+5. **Model Building**:
+   - Built machine learning models using **Random Forest**, **Gradient Boosting**, and **XGBoost** to predict car prices.
+   - Hyperparameter tuning and cross-validation were performed to optimize model performance.
+
+6. **Model Evaluation**:
+   - Evaluated models using performance metrics like **RMSE**, **MAE**, and **R-squared**.
+   - Compared different models to determine the best performing model for price prediction.
+
+7. **Continuous Training with Apache Airflow**:
+   - Implemented continuous model training using **Apache Airflow** to automate the process of data scraping, model training, and model evaluation.
+   - Airflow DAGs (Directed Acyclic Graphs) were used to schedule and monitor the training pipeline, ensuring the model is retrained periodically with fresh data.
+
+8. **Model Deployment with MLOps**:
+   - Deployed the trained model using **MLFlow** for model tracking, versioning, and management.
+   - Containerized the application with **Docker** for easy deployment and scalability.
+   - Used **Flask** to serve the model as an API, allowing users to input car details and get price predictions.
+
+9. **Data Version Control (DVC)**:
+   - Utilized **DVC** for version control of the datasets and models, enabling reproducibility and tracking of the model’s evolution.
+
+## Technologies Used
+
+- **Data Collection**: Python, Requests, BeautifulSoup
+- **Data Processing**: Pandas, Numpy, Scikit-learn
+- **Machine Learning Models**: Scikit-learn, XGBoost, LightGBM
+- **Model Evaluation**: Matplotlib, Seaborn
+- **MLOps Tools**: Git, DVC, MLFlow, Docker, Airflow
+- **Deployment**: Flask, Docker
+- **Pipeline Orchestration**: Apache Airflow
+
+## How to Run the Project
+
+### Prerequisites:
+- Python 3.x
+- Docker
+- Git
+- DVC
+- MLFlow
+- Apache Airflow
+
+### Installation:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/username/used-car-price-prediction.git
+   cd used-car-price-prediction
+   ```
+
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Set up DVC and pull data:
+   ```bash
+   dvc pull
+   ```
+
+4. Train and evaluate the model:
+   ```bash
+   python train_model.py
+   ```
+
+5. Run the API to make predictions:
+   ```bash
+   python app.py
+   ```
+
+### Docker Setup:
+You can also run the entire project in a Docker container:
+```bash
+docker build -t used-car-price-prediction .
+docker run -p 5000:5000 used-car-price-prediction
+```
+
+### Running Continuous Training with Airflow:
+To set up the automated training pipeline with Airflow, follow these steps:
+1. Start the Airflow web server and scheduler:
+   ```bash
+   airflow webserver -p 8080
+   airflow scheduler
+   ```
+
+2. Trigger the Airflow DAG for continuous training:
+   - Access the Airflow UI at `http://localhost:8080` to monitor the pipeline.
+
+3. The DAG will automate the data scraping, training, and evaluation of the model periodically.
+
+## Future Enhancements
+
+- Integrate external data sources for better prediction accuracy, such as car maintenance history or external market trends.
+- Improve model interpretability with techniques like SHAP or LIME to understand the impact of individual features on predictions.
+- Implement a model monitoring system to track performance over time and retrain when necessary.
+- Expand the deployment pipeline to support cloud platforms such as AWS, GCP, or Azure for scalable deployment.
+
+## Contributing
+
+Feel free to fork the repository and submit pull requests. Contributions to improving the model, adding new features, or enhancing the MLOps pipeline are welcome!
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+
+
+========================================================= Old Description ======================================
 # end-to-end-used-car-price-prediction
 
 ![alt text](image.png)
